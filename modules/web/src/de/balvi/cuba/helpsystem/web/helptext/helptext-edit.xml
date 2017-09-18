@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="de.balvi.cuba.helpsystem.web.helptext.HelptextEdit"
+        datasource="helptextDs"
+        focusComponent="fieldGroup"
+        messagesPack="de.balvi.cuba.helpsystem.web.helptext">
+    <dsContext>
+        <datasource id="helptextDs"
+                    class="de.balvi.cuba.helpsystem.entity.Helptext"
+                    view="helptext-with-category-view"/>
+        <collectionDatasource id="categoriesDs"
+                              class="de.balvi.cuba.helpsystem.entity.HelptextCategory"
+                              view="_minimal">
+            <query>
+                <![CDATA[select e from dbchs$HelptextCategory e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                resizable="true"
+                width="800"/>
+    <layout expand="textTextArea"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="helptextDs">
+            <column width="400px">
+                <field optionsDatasource="categoriesDs"
+                       property="category"/>
+            </column>
+        </fieldGroup>
+
+        <richTextArea id="textTextArea"
+                      datasource="helptextDs"
+                      property="text"
+                      width="100%"/>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

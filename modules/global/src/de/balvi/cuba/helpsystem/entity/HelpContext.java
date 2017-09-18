@@ -9,7 +9,9 @@ import com.haulmont.cuba.core.entity.annotation.OnDelete;
 import com.haulmont.cuba.core.global.DeletePolicy;
 import java.util.List;
 import javax.persistence.OneToMany;
+import com.haulmont.chile.core.annotations.NamePattern;
 
+@NamePattern("%s (%s)|screenId,componentId")
 @Table(name = "DBCHS_HELP_CONTEXT")
 @Entity(name = "dbchs$HelpContext")
 public class HelpContext extends StandardEntity {

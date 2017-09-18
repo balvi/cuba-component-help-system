@@ -195,6 +195,7 @@ configure(coreModule) {
         dbPassword = ''
     }
 
+
     task updateDb(dependsOn: assembleDbScripts, description: 'Updates local database', type: CubaDbUpdate) {
         dbms = 'hsql'
         host = 'localhost'

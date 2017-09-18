@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <screen-config xmlns="http://schemas.haulmont.com/cuba/screens.xsd">
-
     <include file="de/balvi/cuba/helpsystem/screens.xml"/>
-
+    <screen id="dbchs$HelptextCategory.browse"
+            template="de/balvi/cuba/helpsystem/web/helptextcategory/helptext-category-browse.xml"/>
+    <screen id="dbchs$HelptextCategory.edit"
+            template="de/balvi/cuba/helpsystem/web/helptextcategory/helptext-category-edit.xml"/>
+    <screen id="dbchs$HelpContext.browse"
+            template="de/balvi/cuba/helpsystem/web/helpcontext/help-context-browse.xml"/>
+    <screen id="dbchs$HelpContext.edit"
+            template="de/balvi/cuba/helpsystem/web/helpcontext/help-context-edit.xml"/>
+    <screen id="dbchs$Helptext.browse"
+            template="de/balvi/cuba/helpsystem/web/helptext/helptext-browse.xml"/>
+    <screen id="dbchs$Helptext.edit"
+            template="de/balvi/cuba/helpsystem/web/helptext/helptext-edit.xml"/>
 </screen-config>

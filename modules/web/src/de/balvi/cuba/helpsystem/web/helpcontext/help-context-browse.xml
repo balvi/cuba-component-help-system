@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="de.balvi.cuba.helpsystem.web.helpcontext.HelpContextBrowse"
+        focusComponent="helpContextsTable"
+        lookupComponent="helpContextsTable"
+        messagesPack="de.balvi.cuba.helpsystem.web.helpcontext">
+    <dsContext>
+        <groupDatasource id="helpContextsDs"
+                         class="de.balvi.cuba.helpsystem.entity.HelpContext"
+                         view="_local">
+            <query>
+                <![CDATA[select e from dbchs$HelpContext e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="helpContextsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="helpContextsTable"
+                datasource="helpContextsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="helpContextsTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="screenId"/>
+                <column id="componentId"/>
+            </columns>
+            <rows datasource="helpContextsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="helpContextsTable.create"/>
+                <button id="editBtn"
+                        action="helpContextsTable.edit"/>
+                <button id="removeBtn"
+                        action="helpContextsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

@@ -38,6 +38,8 @@ public class SampleIntegrationTest {
     public void tearDown() throws Exception {
     }
 
+
+    /*
     @Test
     public void testLoadUser() {
         try (Transaction tx = persistence.createTransaction()) {
@@ -50,4 +52,5 @@ public class SampleIntegrationTest {
             assertEquals(1, users.size());
         }
     }
+     */
 }

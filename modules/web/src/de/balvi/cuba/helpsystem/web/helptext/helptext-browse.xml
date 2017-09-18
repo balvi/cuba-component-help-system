@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="de.balvi.cuba.helpsystem.web.helptext.HelptextBrowse"
+        focusComponent="helptextsTable"
+        lookupComponent="helptextsTable"
+        messagesPack="de.balvi.cuba.helpsystem.web.helptext">
+    <dsContext>
+        <groupDatasource id="helptextsDs"
+                         class="de.balvi.cuba.helpsystem.entity.Helptext"
+                         view="helptext-with-category-view">
+            <query>
+                <![CDATA[select e from dbchs$Helptext e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="helptextsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="helptextsTable"
+                datasource="helptextsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="helptextsTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="text"/>
+                <column id="helpContext"/>
+                <column id="category"/>
+            </columns>
+            <rows datasource="helptextsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="helptextsTable.create"/>
+                <button id="editBtn"
+                        action="helptextsTable.edit"/>
+                <button id="removeBtn"
+                        action="helptextsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

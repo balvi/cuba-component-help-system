@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
-
+    <view class="de.balvi.cuba.helpsystem.entity.HelpContext"
+          extends="_local"
+          name="helpContext-with-texts-view">
+        <property name="helptexts"
+                  view="helptext-with-category-view"/>
+    </view>
+    <view class="de.balvi.cuba.helpsystem.entity.Helptext"
+          extends="_local"
+          name="helptext-with-category-view">
+        <property name="helpContext"
+                  view="_minimal"/>
+        <property name="category"
+                  view="_minimal"/>
+    </view>
 </views>
