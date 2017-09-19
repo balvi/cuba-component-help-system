@@ -21,6 +21,8 @@
                     datasource="helpContextDs">
             <column width="250px">
                 <field property="screenId" custom="true"/>
+            </column>
+            <column width="250px">
                 <field property="componentId"/>
             </column>
         </fieldGroup>
@@ -30,8 +32,8 @@
                    height="200px"
                    width="100%">
                 <actions>
-                    <action id="create"/>
-                    <action id="edit"/>
+                    <action id="create" openType="DIALOG"/>
+                    <action id="edit" openType="DIALOG"/>
                     <action id="remove"/>
                 </actions>
                 <columns>

@@ -27,7 +27,7 @@ create table DBCHS_HELPTEXT (
     DELETED_BY varchar(50),
     --
     TEXT longvarchar not null,
-    HELP_CONTEXT_ID varchar(36) not null,
+    HELP_CONTEXT_ID varchar(36),
     CATEGORY_ID varchar(36) not null,
     --
     primary key (ID)

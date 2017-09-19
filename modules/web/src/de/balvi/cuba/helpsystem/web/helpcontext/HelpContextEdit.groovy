@@ -35,8 +35,11 @@ class HelpContextEdit extends AbstractEditor<HelpContext> {
 
     @Override
     protected void postInit() {
+        initScreenLookupField()
+        initHelptextActions()
+    }
 
-
+    protected void initScreenLookupField() {
         def screenOptions = [:]
         WindowConfig windowConfig = AppBeans.get(WindowConfig)
         windowConfig.windows.each { WindowInfo windowInfo ->
@@ -44,49 +47,24 @@ class HelpContextEdit extends AbstractEditor<HelpContext> {
 
         }
         FieldGroup.FieldConfig screenIdFieldConfig = fieldGroup.getField('screenId')
+        LookupField lookupField = createScreenLookupField(screenOptions)
+        screenIdFieldConfig.component = lookupField
+    }
 
-
-        LookupField lookupField = componentsFactory.createComponent(LookupField.NAME)
-
-        if (PersistenceHelper.isNew(item) && item.screenId == null) {
-            lookupField.setEnabled(true)
-        }
-        else {
-            lookupField.setEnabled(false)
-        }
-        lookupField.setOptionsMap(screenOptions)
+    protected LookupField createScreenLookupField(LinkedHashMap screenOptions) {
+        LookupField lookupField = componentsFactory.createComponent(LookupField.NAME) as LookupField
+        lookupField.enabled = PersistenceHelper.isNew(item) && item.screenId == null
+        lookupField.optionsMap = screenOptions
         lookupField.setDatasource(helpContextDs, 'screenId')
-        lookupField.setNullOptionVisible(false)
+        lookupField.nullOptionVisible = false
+        lookupField
+    }
 
-
-
-        screenIdFieldConfig.setComponent(lookupField)
-        /*
-        fieldGroup.addCustomField('screenId', new FieldGroup.CustomFieldGenerator() {
-            @Override
-            Component generateField(Datasource datasource, String propertyId) {
-                LookupField lookupField = componentsFactory.createComponent(LookupField.NAME)
-
-                if (PersistenceHelper.isNew(item) && item.screenId == null) {
-                    lookupField.setEnabled(true)
-                }
-                else {
-                    lookupField.setEnabled(false)
-                }
-                lookupField.setOptionsMap(screenOptions)
-                lookupField.setDatasource(datasource, propertyId)
-                lookupField.setNullOptionVisible(false)
-
-                lookupField
-            }
-        })
-        */
-
-        CreateAction createAction = helptextsTable.getAction('create')
+    protected void initHelptextActions() {
+        CreateAction createAction = helptextsTable.getAction('create') as CreateAction
+        EditAction editAction = helptextsTable.getAction('edit') as EditAction
         def windowParams = [contextIndependent: false]
         createAction.windowParams = windowParams
-
-        EditAction editAction = helptextsTable.getAction('edit')
         editAction.windowParams = windowParams
     }
 }

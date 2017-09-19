@@ -10,7 +10,7 @@
                          class="de.balvi.cuba.helpsystem.entity.Helptext"
                          view="helptext-with-category-view">
             <query>
-                <![CDATA[select e from dbchs$Helptext e]]>
+                <![CDATA[select e from dbchs$Helptext e where e.helpContext is null]]>
             </query>
         </groupDatasource>
     </dsContext>

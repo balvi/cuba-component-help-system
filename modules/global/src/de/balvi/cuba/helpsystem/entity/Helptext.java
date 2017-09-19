@@ -1,15 +1,16 @@
 package de.balvi.cuba.helpsystem.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Column;
-import javax.persistence.Lob;
 import com.haulmont.cuba.core.entity.StandardEntity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import com.haulmont.cuba.core.entity.annotation.Lookup;
 import com.haulmont.cuba.core.entity.annotation.LookupType;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Table(name = "DBCHS_HELPTEXT")
 @Entity(name = "dbchs$Helptext")
@@ -20,11 +21,11 @@ public class Helptext extends StandardEntity {
     @Column(name = "TEXT", nullable = false)
     protected String text;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HELP_CONTEXT_ID")
     protected HelpContext helpContext;
 
-    @Lookup(type = LookupType.DROPDOWN, actions = {"lookup", "clear"})
+    @Lookup(type = LookupType.DROPDOWN)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CATEGORY_ID")
     protected HelptextCategory category;

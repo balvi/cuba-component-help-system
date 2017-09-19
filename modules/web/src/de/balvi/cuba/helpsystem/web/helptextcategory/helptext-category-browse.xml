@@ -14,8 +14,6 @@
             </query>
         </groupDatasource>
     </dsContext>
-    <dialogMode height="600"
-                width="800"/>
     <layout expand="helptextCategoriesTable"
             spacing="true">
         <filter id="filter"

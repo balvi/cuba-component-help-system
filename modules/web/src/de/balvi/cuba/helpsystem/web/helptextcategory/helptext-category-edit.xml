@@ -10,8 +10,6 @@
                     class="de.balvi.cuba.helpsystem.entity.HelptextCategory"
                     view="_local"/>
     </dsContext>
-    <dialogMode height="600"
-                width="800"/>
     <layout expand="windowActions"
             spacing="true">
         <fieldGroup id="fieldGroup"

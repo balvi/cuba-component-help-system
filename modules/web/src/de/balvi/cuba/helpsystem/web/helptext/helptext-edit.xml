@@ -13,7 +13,7 @@
                               class="de.balvi.cuba.helpsystem.entity.HelptextCategory"
                               view="_minimal">
             <query>
-                <![CDATA[select e from dbchs$HelptextCategory e]]>
+                <![CDATA[select e from dbchs$HelptextCategory e where e.contextIndependent = :param$contextIndependent]]>
             </query>
         </collectionDatasource>
     </dsContext>
