@@ -129,7 +129,7 @@ class HelpRenderer {
         splitPanel.setSplitPosition(65, com.haulmont.cuba.gui.components.Component.UNITS_PIXELS, true)
     }
 
-    protected void createTabForHelptext(Helptext hilfetext) {
+    protected void createTabForHelptext(Helptext helptext) {
         ScrollBoxLayout scrollBox = componentsFactory.createComponent(ScrollBoxLayout)
         scrollBox.setMargin(true)
         scrollBox.setSpacing(true)
@@ -138,7 +138,7 @@ class HelpRenderer {
 
         def label = componentsFactory.createComponent(Label)
 
-        label.value = hilfetext.text
+        label.value = helptext.text
         label.width = "100%"
         label.htmlEnabled = true
 
@@ -149,13 +149,13 @@ class HelpRenderer {
         textHbox.setWidthFull()
         textHbox.add(label)
         scrollBox.add(textHbox)
-        helpAcc.addTab('' + hilfetext.category.name, scrollBox)
-        Accordion.Tab tab = helpAcc.getTab('' + hilfetext.category.name)
+        helpAcc.addTab('' + helptext.category.name, scrollBox)
+        Accordion.Tab tab = helpAcc.getTab('' + helptext.category.name)
 
-        if (PersistenceHelper.isLoaded(hilfetext, "helpContext") && hilfetext.helpContext) {
-            tab.caption = '' + hilfetext.category.name
+        if (PersistenceHelper.isLoaded(helptext, "helpContext") && helptext.helpContext) {
+            tab.caption = '' + helptext.category.name
         } else {
-            tab.caption = '' + hilfetext.category.name + ' (allgemein)'
+            tab.caption = '' + helptext.category.name + ' (allgemein)'
         }
     }
 

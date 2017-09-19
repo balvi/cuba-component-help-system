@@ -6,13 +6,13 @@
         lookupComponent="helptextsTable"
         messagesPack="de.balvi.cuba.helpsystem.web.helptext">
     <dsContext>
-        <groupDatasource id="helptextsDs"
+        <collectionDatasource id="helptextsDs"
                          class="de.balvi.cuba.helpsystem.entity.Helptext"
                          view="helptext-with-category-view">
             <query>
                 <![CDATA[select e from dbchs$Helptext e where e.helpContext is null]]>
             </query>
-        </groupDatasource>
+        </collectionDatasource>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
@@ -23,7 +23,7 @@
                 datasource="helptextsDs">
             <properties include=".*"/>
         </filter>
-        <groupTable id="helptextsTable"
+        <table id="helptextsTable"
                     width="100%">
             <actions>
                 <action id="create"/>
@@ -32,7 +32,6 @@
             </actions>
             <columns>
                 <column id="text"/>
-                <column id="helpContext"/>
                 <column id="category"/>
             </columns>
             <rows datasource="helptextsDs"/>
@@ -46,6 +45,6 @@
                 <button id="removeBtn"
                         action="helptextsTable.remove"/>
             </buttonsPanel>
-        </groupTable>
+        </table>
     </layout>
 </window>
