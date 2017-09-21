@@ -37,8 +37,8 @@ The latest version is: `0.1.0`
 
 Add custom application component to your project:
 
-* Artifact group: `de.balvi.cuba.sessioninfo`
-* Artifact name: `sessioninfo-global`
+* Artifact group: `de.balvi.cuba.helpsystem`
+* Artifact name: `help-system-global`
 * Version: *add-on version*
 
 ## Usage
