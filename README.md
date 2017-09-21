@@ -5,24 +5,65 @@
 
 This application component offers a context help system for your CUBA application. 
 
-## Installation
-Currently you have to [download](https://github.com/balvi/cuba-component-help-system/archive/master.zip) the app-component manually and import it into Studio. After opening it in studio, you have to execute "Run > Install app component". 
-After that you can go into your project and add the dependency to you project through "Project Properties > Edit > custom components (+) > cuba-component-help-system".
 
-Note: This manual installation step will probably simplify with Version 6.6 of CUBA and studio.
+## Installation
+
+1. Add the following maven repository `https://dl.bintray.com/balvi/cuba-components` to the build.gradle of your CUBA application:
+
+
+    buildscript {
+        
+        //...
+        
+        repositories {
+        
+            // ...
+        
+            maven {
+                url  "https://dl.bintray.com/balvi/cuba-components"
+            }
+        }
+        
+        // ...
+    }
+
+2. Select a version of the add-on which is compatible with the platform version used in your project:
+
+| Platform Version | Add-on Version |
+| ---------------- | -------------- |
+| 6.6.x            | 0.1.x          |
+
+The latest version is: `0.1.0`
+
+Add custom application component to your project:
+
+* Artifact group: `de.balvi.cuba.sessioninfo`
+* Artifact name: `sessioninfo-global`
+* Version: *add-on version*
 
 ## Usage
 
 
 ### Defining help texts
-To use the help system, users can define help texts for certain screens (even components) of our application. These texts are stored in the databse.
+To use the help system, users can define help texts for certain screens (even components) of the application. These texts are stored in the databse.
 
 
-![Screenshot help text management](https://github.com/mariodavid/cuba-component-runtime-diagnose/blob/master/img/groovy-console-screenshot.png)
+![Screenshot help text management](https://github.com/balvi/cuba-component-help-system/blob/master/img/help-text-management.png)
 
-### Usage of the predefined help texts
+### Usage of the help texts in the application
 
-When the user uses a particular screen of your application, there is a help button. 
+When the user uses a particular screen of your application, there is a help button on the upper right of the screen. 
 Using that will open the help information for this particular screen. 
 
-![Screenshot context help](https://github.com/mariodavid/cuba-component-runtime-diagnose/blob/master/img/groovy-console-screenshot.png)
+In order to make a screen available for help text, just add the `@HasHelp` Annotation on your controller and extend from `AnnotatableAbstract(Lookup|Editor)` like this:
+
+    @HasHelp
+    class CustomerBrowse extends AnnotatableAbstractLookup {
+    
+    }
+    
+For more information on the annotation topic, you can take a look at the [declarative-controllers](https://github.com/balvi/cuba-component-declarative-controllers) application component.
+
+Now you can take a look at the screen you annotated and will see the help button on the upper right:
+
+![Screenshot context help](https://github.com/balvi/cuba-component-help-system/blob/master/img/context-help-usage.png)
