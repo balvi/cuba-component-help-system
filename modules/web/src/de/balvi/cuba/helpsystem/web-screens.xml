@@ -13,4 +13,6 @@
             template="de/balvi/cuba/helpsystem/web/helptext/helptext-browse.xml"/>
     <screen id="dbchs$Helptext.edit"
             template="de/balvi/cuba/helpsystem/web/helptext/helptext-edit.xml"/>
+    <screen id="dbchs$Helptext.show"
+            template="de/balvi/cuba/helpsystem/web/helptext/helptext-show.xml"/>
 </screen-config>

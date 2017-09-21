@@ -5,7 +5,14 @@ import de.balvi.cuba.helpsystem.web.action.HasHelp
 
 @HasHelp
 class HelptextCategoryBrowse extends AnnotatableAbstractLookup {
-
+//
+//
+//    @Override
+//    void ready() {
+//        super.ready()
+//        initComponent(frame)
+//    }
+//
 //    @Inject
 //    ButtonsPanelHelper buttonsPanelHelper
 //
@@ -15,25 +22,40 @@ class HelptextCategoryBrowse extends AnnotatableAbstractLookup {
 //    @Inject
 //    HelpContextService helpContextService
 //
-//    Accordion helpAcc
-//    private SplitPanel splitPanel
-//    private Button helpBtn
-//
-//    boolean istHilfeAktiviert = false
+//    @Inject
+//    Metadata metadata
 //
 //    @Inject
-//    Table helptextCategoriesTable
+//    Security security
 //
-//    @Override
-//    void ready() {
-//        super.ready()
-//        initComponent(frame)
-//    }
+//    Accordion helpAcc
+//
+//    SplitPanel splitPanel
+//
+//    boolean isHelpActivated = false
+//    private Frame wrappedFrame
+//
 //
 //    void initComponent(Frame frame) {
-//        Frame wrappedFrame = frame
+//        wrappedFrame = frame
 //
-//        Collection<com.haulmont.cuba.gui.components.Component> components = new ArrayList<>(wrappedFrame.getOwnComponents())
+//        initLeftRightSplitPanel()
+//        closeHelpPanel()
+//
+//    }
+//
+//    protected void initLeftRightSplitPanel() {
+//        BoxLayout leftBox = createLeftBoxFromExistingContent()
+//        BoxLayout rightBox = createRightBox()
+//
+//        splitPanel = createSplitPanel(leftBox, rightBox)
+//        wrappedFrame.add(splitPanel)
+//    }
+//
+//    protected BoxLayout createLeftBoxFromExistingContent() {
+//        Collection<com.haulmont.cuba.gui.components.Component> components = new ArrayList<>(wrappedFrame.ownComponents)
+//
+//        def expandComponent = wrappedFrame.ownComponents.find { wrappedFrame.isExpanded(it) }
 //
 //        wrappedFrame.removeAll()
 //
@@ -45,85 +67,157 @@ class HelptextCategoryBrowse extends AnnotatableAbstractLookup {
 //            leftBox.add(it)
 //        }
 //
-//        getComponents().each {
-//            if (wrappedFrame.isExpanded(it)) {
-//                showNotification("hallo $it", Frame.NotificationType.TRAY)
-//            }
+//        if (expandComponent) {
+//            leftBox.expand(expandComponent)
 //        }
-//        def expandComponent = helptextCategoriesTable
-//        leftBox.expand(expandComponent)
-//        BoxLayout rightBox = componentsFactory.createComponent(VBoxLayout.class)
-//        rightBox.setHeightFull()
-//        rightBox.margin = true
+//        leftBox
+//    }
 //
+//    protected BoxLayout createRightBox() {
+//        BoxLayout rightBox = createRightBoxLayout()
+//        BoxLayout buttonBox = createHelpButtonBox()
+//        BoxLayout buttonEnabledBox = createHelpButtonEnabledBox()
 //
-//
-//        BoxLayout buttonBox = componentsFactory.createComponent(HBoxLayout.class)
-//        helpBtn = componentsFactory.createComponent(Button.class)
-//        helpBtn.icon = 'font-icon:QUESTION_CIRCLE'
 //        helpAcc = componentsFactory.createComponent(Accordion.class)
 //        helpAcc.setHeightFull()
-//        buttonBox.alignment = com.haulmont.cuba.gui.components.Component.Alignment.TOP_RIGHT
-//        buttonBox.add(helpBtn)
 //        rightBox.add(buttonBox)
+//        rightBox.add(buttonEnabledBox)
 //        rightBox.add(helpAcc)
 //        rightBox.spacing = true
 //        rightBox.expand(helpAcc)
 //        helpAcc.visible = false
 //
-//        helpBtn.caption = ''
-//        helpBtn.action = new BaseAction('helpBtnAction') {
+//
+//        rightBox
+//    }
+//
+//    protected BoxLayout createRightBoxLayout() {
+//        BoxLayout rightBox = componentsFactory.createComponent(VBoxLayout.class)
+//        rightBox.setHeightFull()
+//        rightBox.margin = true
+//        rightBox
+//    }
+//
+//    protected BoxLayout createHelpButtonBox() {
+//        BoxLayout buttonBox = componentsFactory.createComponent(HBoxLayout.class)
+//        buttonBox.id = 'disabledButtonBox'
+//        Button disabledHelpBtn = createBtn('font-icon:QUESTION_CIRCLE')
+//        disabledHelpBtn.action = new BaseAction('helpBtnAction') {
 //            @Override
 //            void actionPerform(com.haulmont.cuba.gui.components.Component component) {
-//                handleHilfeOeffnenAction(wrappedFrame)
+//                handleOpenHelpAction()
 //            }
 //        }
 //
+//        buttonBox.spacing = true
+//        buttonBox.alignment = com.haulmont.cuba.gui.components.Component.Alignment.TOP_RIGHT
+//
+//        buttonBox.add(disabledHelpBtn)
+//        buttonBox
+//    }
+//
+//    protected BoxLayout createHelpButtonEnabledBox() {
+//        BoxLayout buttonBox = componentsFactory.createComponent(HBoxLayout.class)
+//        buttonBox.id = 'enabledButtonBox'
+//        def enabledHelpBtn = createBtn('font-icon:QUESTION_CIRCLE')
+//        enabledHelpBtn.styleName = 'friendly'
+//        enabledHelpBtn.action = new BaseAction('helpBtnAction') {
+//            @Override
+//            void actionPerform(com.haulmont.cuba.gui.components.Component component) {
+//                handleCloseHelpAction()
+//            }
+//        }
+//        createHelpEditBtnIfAllowed(buttonBox)
+//
+//        def openHelpNewWindowBtn = createBtn('font-icon:EXTERNAL_LINK')
+//        openHelpNewWindowBtn.action = new BaseAction('helpBtnAction') {
+//            @Override
+//            void actionPerform(com.haulmont.cuba.gui.components.Component component) {
+//                openHelpInNewTab()
+//            }
+//        }
+//        buttonBox.add(openHelpNewWindowBtn)
+//
+//
+//        buttonBox.spacing = true
+//        buttonBox.alignment = com.haulmont.cuba.gui.components.Component.Alignment.TOP_RIGHT
+//        buttonBox.add(enabledHelpBtn)
+//        buttonBox.visible = false
+//        buttonBox
+//    }
+//
+//    protected void createHelpEditBtnIfAllowed(HBoxLayout buttonBox) {
+//        if (security.isEntityOpPermitted(HelpContext, EntityOp.UPDATE) && security.isEntityOpPermitted(Helptext, EntityOp.UPDATE)) {
+//            def editHelpBtn = createBtn('icons/edit.png')
+//
+//            editHelpBtn.action = new BaseAction('editHelpBtnAction') {
+//                @Override
+//                void actionPerform(Component component) {
+//                    editHelpContext()
+//                }
+//            }
+//            buttonBox.add(editHelpBtn)
+//        }
+//    }
+//
+//    protected Button createBtn(String icon, String caption = '') {
+//        Button btn = componentsFactory.createComponent(Button.class)
+//        btn.icon = icon
+//        btn.caption = caption
+//
+//        btn
+//    }
+//
+//    protected SplitPanel createSplitPanel(BoxLayout leftBox, BoxLayout rightBox) {
 //        splitPanel = componentsFactory.createComponent(SplitPanel.class)
 //        splitPanel.orientation = SplitPanel.ORIENTATION_HORIZONTAL
 //
 //        splitPanel.setHeightFull()
 //
-////        splitPanel.locked = true
 //        splitPanel.add(leftBox)
 //        splitPanel.add(rightBox)
-//        closeHelpPanel()
-//
-//        wrappedFrame.add(splitPanel)
+//        splitPanel
 //    }
 //
 //
-//    void handleHilfeOeffnenAction(Frame frame) {
+//    void handleOpenHelpAction() {
 //
-//        if (!istHilfeAktiviert) {
+//        if (!isHelpActivated) {
 //            openHelpPanel()
 //            helpAcc.visible = true
+//            frame.getComponent('disabledButtonBox').visible = false
+//            frame.getComponent('enabledButtonBox').visible = true
 //
-//            helpBtn.styleName = 'friendly'
-//            istHilfeAktiviert = true
-//        } else {
-//            closeHelpPanel()
-//            helpAcc.visible = false
-//            helpBtn.styleName = ''
+//            isHelpActivated = true
 //
-//            istHilfeAktiviert = false
-//        }
 //
-//        helpAcc.removeAllTabs()
-//        HelpContext helpContext = getCurrentHelpContext(frame)
+//            helpAcc.removeAllTabs()
+//            HelpContext helpContext = currentHelpContext
 //
-//        contextIndependentHelptexts.each { Helptext helptext ->
-//            createTabForHelptext(helptext)
-//        }
-//
-//        if (helpContext && helpContext.helptexts) {
-//            helpContext.helptexts.sort { it.category.code }.each { Helptext helptext ->
+//            contextIndependentHelptexts.each { Helptext helptext ->
 //                createTabForHelptext(helptext)
 //            }
-//        } else {
-////            hilfeBearbeitenBtn.setVisible(false)
-////            hilfeAnlegenBtn.setVisible(true)
+//
+//            if (helpContext && helpContext.helptexts) {
+//                helpContext.helptexts.sort { it.category.code }.each { Helptext helptext ->
+//                    createTabForHelptext(helptext)
+//                }
+//            }
 //        }
+//    }
+//
+//
+//    void handleCloseHelpAction() {
+//
+//        if (isHelpActivated) {
+//            closeHelpPanel()
+//            frame.getComponent('disabledButtonBox').visible = true
+//            frame.getComponent('enabledButtonBox').visible = false
+//            helpAcc.visible = false
+//
+//            isHelpActivated = false
+//        }
+//
 //    }
 //
 //    protected openHelpPanel() {
@@ -134,17 +228,27 @@ class HelptextCategoryBrowse extends AnnotatableAbstractLookup {
 //        splitPanel.setSplitPosition(65, com.haulmont.cuba.gui.components.Component.UNITS_PIXELS, true)
 //    }
 //
-//    protected void createTabForHelptext(Helptext hilfetext) {
-//        ScrollBoxLayout scrollBox = componentsFactory.createComponent(ScrollBoxLayout)
-//        scrollBox.setMargin(true)
-//        scrollBox.setSpacing(true)
-//        scrollBox.setHeightFull()
-//        scrollBox.setWidthFull()
+//    protected void createTabForHelptext(Helptext helptext) {
+//        ScrollBoxLayout scrollBox = createHelpAccordionScrollBoxLayout()
 //
+//        BoxLayout textHbox = createHelptextLayoutComponent(helptext)
+//        scrollBox.add(textHbox)
+//
+//        createTabComponentForCategory(helptext.category.name, scrollBox)
+//    }
+//
+//    protected Accordion.Tab createTabComponentForCategory(String categoryName, ScrollBoxLayout scrollBox) {
+//        helpAcc.addTab(categoryName, scrollBox)
+//        Accordion.Tab newTab = helpAcc.getTab(categoryName)
+//        newTab.caption = categoryName
+//        newTab
+//    }
+//
+//    protected BoxLayout createHelptextLayoutComponent(Helptext helptext) {
 //        def label = componentsFactory.createComponent(Label)
 //
-//        label.value = hilfetext.text
-//        label.width = "100%"
+//        label.value = helptext.text
+//        label.setWidthFull()
 //        label.htmlEnabled = true
 //
 //        def textHbox = componentsFactory.createComponent(HBoxLayout)
@@ -153,42 +257,41 @@ class HelptextCategoryBrowse extends AnnotatableAbstractLookup {
 //        textHbox.setHeightFull()
 //        textHbox.setWidthFull()
 //        textHbox.add(label)
-//        scrollBox.add(textHbox)
-//        helpAcc.addTab('' + hilfetext.category.name, scrollBox)
-//        Accordion.Tab tab = helpAcc.getTab('' + hilfetext.category.name)
-//
-//        if (PersistenceHelper.isLoaded(hilfetext, "helpContext") && hilfetext.helpContext) {
-//            tab.caption = '' + hilfetext.category.name
-//        } else {
-//            tab.caption = '' + hilfetext.category.name + ' (allgemein)'
-//        }
+//        textHbox
 //    }
 //
-//    protected HelpContext getCurrentHelpContext(Frame frame) {
-//        helpContextService.getHelpContext(frame.id, null)
+//    protected ScrollBoxLayout createHelpAccordionScrollBoxLayout() {
+//        ScrollBoxLayout scrollBox = componentsFactory.createComponent(ScrollBoxLayout)
+//        scrollBox.setMargin(true)
+//        scrollBox.setSpacing(true)
+//        scrollBox.setHeightFull()
+//        scrollBox.setWidthFull()
+//        scrollBox
+//    }
+//
+//    protected HelpContext getCurrentHelpContext() {
+//        helpContextService.getHelpContext(wrappedFrame.id, null)
 //    }
 //
 //    protected Collection<Helptext> getContextIndependentHelptexts() {
 //        helpContextService.contextIndependentHelptexts
 //    }
-
-//    public void hilfeBearbeiten() {
-//        openEditor(getCurrentHelpContext(), WindowManager.OpenType.NEW_TAB)
+//
+//
+//    void editHelpContext() {
+//        def helpContext = currentHelpContext
+//
+//        if (!helpContext) {
+//            helpContext = metadata.create(HelpContext)
+//            helpContext.screenId = wrappedFrame.id
+//        }
+//        wrappedFrame.openEditor(helpContext, WindowManager.OpenType.DIALOG)
 //    }
 //
-//    public void hilfeAnlegen() {
-//        Hilfeseite hilfeseite = metadata.create(Hilfeseite)
-//        hilfeseite.screenId = ermittleAktuelleScreenId()
-//        openEditor(hilfeseite, WindowManager.OpenType.NEW_TAB)
+//    void openHelpInNewTab() {
+//        openWindow('dbchs$Helptext.show', WindowManager.OpenType.NEW_TAB, [
+//                helpContext: currentHelpContext,
+//                helpContextCaption: caption
+//        ])
 //    }
-
-//    public void hilfeOeffnen() {
-//        def hilfeseite = getCurrentHelpContext()
-//        if (hilfeseite) {
-//            openEditor('pl$Hilfeseite.show', hilfeseite, WindowManager.OpenType.DIALOG)
-//        } else {
-//            showNotification("Keine Hilfetexte für diese Seite vorhanden", Frame.NotificationType.TRAY)
-//        }
-//    }
-
 }

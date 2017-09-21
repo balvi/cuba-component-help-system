@@ -1,6 +1,8 @@
 package de.balvi.cuba.helpsystem.web.helpcontext
 
-import com.haulmont.cuba.gui.components.AbstractLookup
+import de.balvi.cuba.declarativecontrollers.web.browse.AnnotatableAbstractLookup
+import de.balvi.cuba.helpsystem.web.action.HasHelp
 
-class HelpContextBrowse extends AbstractLookup {
+@HasHelp
+class HelpContextBrowse extends AnnotatableAbstractLookup {
 }

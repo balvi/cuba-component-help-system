@@ -2,10 +2,7 @@ package de.balvi.cuba.helpsystem.web.helpcontext
 
 import com.haulmont.cuba.core.global.AppBeans
 import com.haulmont.cuba.core.global.PersistenceHelper
-import com.haulmont.cuba.gui.components.AbstractEditor
-import com.haulmont.cuba.gui.components.FieldGroup
-import com.haulmont.cuba.gui.components.LookupField
-import com.haulmont.cuba.gui.components.Table
+import com.haulmont.cuba.gui.components.*
 import com.haulmont.cuba.gui.components.actions.CreateAction
 import com.haulmont.cuba.gui.components.actions.EditAction
 import com.haulmont.cuba.gui.config.WindowConfig
@@ -16,12 +13,16 @@ import de.balvi.cuba.helpsystem.entity.HelpContext
 import de.balvi.cuba.helpsystem.entity.Helptext
 
 import javax.inject.Inject
+import javax.inject.Named
 
 class HelpContextEdit extends AbstractEditor<HelpContext> {
 
 
     @Inject
     protected FieldGroup fieldGroup
+
+    @Named("fieldGroup.componentId")
+    TextInputField componentIdField
 
     @Inject
     protected ComponentsFactory componentsFactory
@@ -53,7 +54,8 @@ class HelpContextEdit extends AbstractEditor<HelpContext> {
 
     protected LookupField createScreenLookupField(LinkedHashMap screenOptions) {
         LookupField lookupField = componentsFactory.createComponent(LookupField.NAME) as LookupField
-        lookupField.enabled = PersistenceHelper.isNew(item) && item.screenId == null
+        lookupField.enabled = PersistenceHelper.isNew(item) && !item.screenId
+        componentIdField.enabled = PersistenceHelper.isNew(item) && !item.screenId
         lookupField.optionsMap = screenOptions
         lookupField.setDatasource(helpContextDs, 'screenId')
         lookupField.nullOptionVisible = false

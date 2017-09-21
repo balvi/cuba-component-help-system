@@ -15,7 +15,7 @@
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="windowActions"
+    <layout expand="helptextsBox"
             spacing="true">
         <fieldGroup id="fieldGroup"
                     datasource="helpContextDs">
@@ -29,7 +29,7 @@
         <groupBox id="helptextsBox"
                   caption="msg://de.balvi.cuba.helpsystem.entity/HelpContext.helptexts">
             <table id="helptextsTable"
-                   height="200px"
+                   height="100%"
                    width="100%">
                 <actions>
                     <action id="create" openType="DIALOG"/>

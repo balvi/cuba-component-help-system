@@ -11,13 +11,13 @@ buildscript {
             }
         }
         maven {
-            url  "https://dl.bintray.com/mariodavid/cuba-component-declarative-controllers"
+            url  "https://dl.bintray.com/mariodavid/cuba-components"
         }
     }
     dependencies {
         classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
 
-        classpath 'net.saliman:gradle-cobertura-plugin:2.3.2'
+        classpath 'net.saliman:gradle-cobertura-plugin:2.5.0'
     }
 }
 
@@ -58,7 +58,7 @@ cuba {
 }
 
 dependencies {
-    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.2-SNAPSHOT")
+    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.3.1-SNAPSHOT")
 
 }
 
