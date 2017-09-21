@@ -1,17 +1,10 @@
 package de.balvi.cuba.helpsystem.web
 
-import com.haulmont.cuba.core.global.Metadata
-import com.haulmont.cuba.core.global.Security
-import com.haulmont.cuba.gui.WindowManager
 import com.haulmont.cuba.gui.components.*
-import com.haulmont.cuba.gui.components.actions.BaseAction
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory
-import com.haulmont.cuba.security.entity.EntityOp
-import de.balvi.cuba.declarativecontrollers.web.helper.ButtonsPanelHelper
 import de.balvi.cuba.helpsystem.entity.HelpContext
 import de.balvi.cuba.helpsystem.entity.Helptext
 import de.balvi.cuba.helpsystem.service.HelpContextService
-import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 
 import javax.inject.Inject
@@ -26,7 +19,6 @@ class HelptextComponentHelper {
     HelpContextService helpContextService
 
     void initHelptextAccordion(HelpContext helpContext, Accordion helptextAccordion) {
-//        HelpContext helpContext = currentHelpContext
 
         contextIndependentHelptexts.each { Helptext helptext ->
             createTabForHelptext(helptextAccordion, helptext)
@@ -45,6 +37,7 @@ class HelptextComponentHelper {
     }
 
 
+    @SuppressWarnings('BuilderMethodWithSideEffects')
     void createTabForHelptext(Accordion helptextAccordion, Helptext helptext) {
         ScrollBoxLayout scrollBox = createHelpAccordionScrollBoxLayout()
 

@@ -13,12 +13,12 @@ import de.balvi.cuba.helpsystem.entity.Helptext
 import de.balvi.cuba.helpsystem.service.HelpContextService
 import de.balvi.cuba.helpsystem.web.HelptextComponentHelper
 import org.springframework.context.annotation.Scope
-import org.springframework.stereotype.Component
 
 import javax.inject.Inject
 
-@Component
-@Scope("prototype")
+@SuppressWarnings('ClassSize')
+@org.springframework.stereotype.Component
+@Scope('prototype')
 class HelpSidePanelRenderer {
 
     @Inject
@@ -45,6 +45,10 @@ class HelpSidePanelRenderer {
 
     boolean isHelpActivated = false
     private Frame wrappedFrame
+    private final String DISABLED_BUTTON_BOX_ID = 'disabledButtonBox'
+    private final String ENABLED_BUTTON_BOX_ID = 'enabledButtonBox'
+    private final String QUESTION_MARK_ICON = 'font-icon:QUESTION_CIRCLE'
+    private final String HELP_BUTTON_ACTION_ID = 'helpBtnAction'
 
 
     void initComponent(Frame frame) {
@@ -64,13 +68,13 @@ class HelpSidePanelRenderer {
     }
 
     protected BoxLayout createLeftBoxFromExistingContent() {
-        Collection<com.haulmont.cuba.gui.components.Component> components = new ArrayList<>(wrappedFrame.ownComponents)
+        Collection<Component> components = new ArrayList<>(wrappedFrame.ownComponents)
 
         def expandComponent = wrappedFrame.ownComponents.find { wrappedFrame.isExpanded(it) }
 
         wrappedFrame.removeAll()
 
-        BoxLayout leftBox = componentsFactory.createComponent(VBoxLayout.class)
+        BoxLayout leftBox = componentsFactory.createComponent(VBoxLayout)
         leftBox.spacing = true
         leftBox.setMargin(false, true, false, false)
         leftBox.setHeightFull()
@@ -89,7 +93,7 @@ class HelpSidePanelRenderer {
         BoxLayout buttonBox = createHelpButtonBox()
         BoxLayout buttonEnabledBox = createHelpButtonEnabledBox()
 
-        helpAcc = componentsFactory.createComponent(Accordion.class)
+        helpAcc = componentsFactory.createComponent(Accordion)
         helpAcc.setHeightFull()
         rightBox.add(buttonBox)
         rightBox.add(buttonEnabledBox)
@@ -103,67 +107,79 @@ class HelpSidePanelRenderer {
     }
 
     protected BoxLayout createRightBoxLayout() {
-        BoxLayout rightBox = componentsFactory.createComponent(VBoxLayout.class)
+        BoxLayout rightBox = componentsFactory.createComponent(VBoxLayout)
         rightBox.setHeightFull()
         rightBox.margin = true
         rightBox
     }
 
     protected BoxLayout createHelpButtonBox() {
-        BoxLayout buttonBox = componentsFactory.createComponent(HBoxLayout.class)
-        buttonBox.id = 'disabledButtonBox'
-        Button disabledHelpBtn = createBtn('font-icon:QUESTION_CIRCLE')
-        disabledHelpBtn.action = new BaseAction('helpBtnAction') {
+        BoxLayout buttonBox = componentsFactory.createComponent(HBoxLayout)
+        buttonBox.id = DISABLED_BUTTON_BOX_ID
+        Button disabledHelpBtn = createBtn(QUESTION_MARK_ICON)
+        disabledHelpBtn.action = new BaseAction(HELP_BUTTON_ACTION_ID) {
             @Override
-            void actionPerform(com.haulmont.cuba.gui.components.Component component) {
+            void actionPerform(Component component) {
                 handleOpenHelpAction()
             }
         }
 
         buttonBox.spacing = true
-        buttonBox.alignment = com.haulmont.cuba.gui.components.Component.Alignment.TOP_RIGHT
+        buttonBox.alignment = Component.Alignment.TOP_RIGHT
 
         buttonBox.add(disabledHelpBtn)
         buttonBox
     }
 
     protected BoxLayout createHelpButtonEnabledBox() {
-        BoxLayout buttonBox = componentsFactory.createComponent(HBoxLayout.class)
-        buttonBox.id = 'enabledButtonBox'
-        def enabledHelpBtn = createBtn('font-icon:QUESTION_CIRCLE')
-        enabledHelpBtn.styleName = 'friendly'
-        enabledHelpBtn.action = new BaseAction('helpBtnAction') {
-            @Override
-            void actionPerform(com.haulmont.cuba.gui.components.Component component) {
-                handleCloseHelpAction()
-            }
-        }
-        createHelpEditBtnIfAllowed(buttonBox)
+        HBoxLayout buttonBox = createHelpButtonEnabledBoxComponent()
 
-        def openHelpNewWindowBtn = createBtn('font-icon:EXTERNAL_LINK')
-        openHelpNewWindowBtn.action = new BaseAction('helpBtnAction') {
-            @Override
-            void actionPerform(com.haulmont.cuba.gui.components.Component component) {
-                openHelpInNewTab()
-            }
-        }
-        buttonBox.add(openHelpNewWindowBtn)
+        appendEnabledHelpButton(buttonBox)
+        appendHelpEditBtnIfAllowed(buttonBox)
+        appendOpenHelpInNewWindowButton(buttonBox)
 
+        buttonBox
+    }
 
+    protected HBoxLayout createHelpButtonEnabledBoxComponent() {
+        BoxLayout buttonBox = componentsFactory.createComponent(HBoxLayout)
+        buttonBox.id = ENABLED_BUTTON_BOX_ID
         buttonBox.spacing = true
-        buttonBox.alignment = com.haulmont.cuba.gui.components.Component.Alignment.TOP_RIGHT
-        buttonBox.add(enabledHelpBtn)
+        buttonBox.alignment = Component.Alignment.TOP_RIGHT
         buttonBox.visible = false
         buttonBox
     }
 
-    protected void createHelpEditBtnIfAllowed(HBoxLayout buttonBox) {
+    protected void appendEnabledHelpButton(HBoxLayout buttonBox) {
+        def enabledHelpBtn = createBtn(QUESTION_MARK_ICON)
+        enabledHelpBtn.styleName = 'friendly'
+        enabledHelpBtn.action = new BaseAction(HELP_BUTTON_ACTION_ID) {
+            @Override
+            void actionPerform(Component component) {
+                handleCloseHelpAction()
+            }
+        }
+        buttonBox.add(enabledHelpBtn)
+    }
+
+    protected void appendOpenHelpInNewWindowButton(HBoxLayout buttonBox) {
+        def openHelpNewWindowBtn = createBtn('font-icon:EXTERNAL_LINK')
+        openHelpNewWindowBtn.action = new BaseAction(HELP_BUTTON_ACTION_ID) {
+            @Override
+            void actionPerform(Component component) {
+                openHelpInNewTab()
+            }
+        }
+        buttonBox.add(openHelpNewWindowBtn)
+    }
+
+    protected void appendHelpEditBtnIfAllowed(HBoxLayout buttonBox) {
         if (security.isEntityOpPermitted(HelpContext, EntityOp.UPDATE) && security.isEntityOpPermitted(Helptext, EntityOp.UPDATE)) {
             def editHelpBtn = createBtn('icons/edit.png')
 
             editHelpBtn.action = new BaseAction('editHelpBtnAction') {
                 @Override
-                void actionPerform(com.haulmont.cuba.gui.components.Component component) {
+                void actionPerform(Component component) {
                     editHelpContext()
                 }
             }
@@ -172,7 +188,7 @@ class HelpSidePanelRenderer {
     }
 
     protected Button createBtn(String icon, String caption = '') {
-        Button btn = componentsFactory.createComponent(Button.class)
+        Button btn = componentsFactory.createComponent(Button)
         btn.icon = icon
         btn.caption = caption
 
@@ -180,7 +196,7 @@ class HelpSidePanelRenderer {
     }
 
     protected SplitPanel createSplitPanel(BoxLayout leftBox, BoxLayout rightBox) {
-        splitPanel = componentsFactory.createComponent(SplitPanel.class)
+        splitPanel = componentsFactory.createComponent(SplitPanel)
         splitPanel.orientation = SplitPanel.ORIENTATION_HORIZONTAL
 
         splitPanel.setHeightFull()
@@ -196,8 +212,8 @@ class HelpSidePanelRenderer {
         if (!isHelpActivated) {
             openHelpPanel()
             helpAcc.visible = true
-            wrappedFrame.getComponent('disabledButtonBox').visible = false
-            wrappedFrame.getComponent('enabledButtonBox').visible = true
+            wrappedFrame.getComponent(DISABLED_BUTTON_BOX_ID).visible = false
+            wrappedFrame.getComponent(ENABLED_BUTTON_BOX_ID).visible = true
 
             isHelpActivated = true
 
@@ -214,8 +230,8 @@ class HelpSidePanelRenderer {
 
         if (isHelpActivated) {
             closeHelpPanel()
-            wrappedFrame.getComponent('disabledButtonBox').visible = true
-            wrappedFrame.getComponent('enabledButtonBox').visible = false
+            wrappedFrame.getComponent(DISABLED_BUTTON_BOX_ID).visible = true
+            wrappedFrame.getComponent(ENABLED_BUTTON_BOX_ID).visible = false
             helpAcc.visible = false
 
             isHelpActivated = false
@@ -224,11 +240,11 @@ class HelpSidePanelRenderer {
     }
 
     protected openHelpPanel() {
-        splitPanel.setSplitPosition(30, com.haulmont.cuba.gui.components.Component.UNITS_PERCENTAGE, true)
+        splitPanel.setSplitPosition(30, Component.UNITS_PERCENTAGE, true)
     }
 
     protected closeHelpPanel() {
-        splitPanel.setSplitPosition(65, com.haulmont.cuba.gui.components.Component.UNITS_PIXELS, true)
+        splitPanel.setSplitPosition(65, Component.UNITS_PIXELS, true)
     }
 
 

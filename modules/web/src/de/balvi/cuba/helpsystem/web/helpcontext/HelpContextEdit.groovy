@@ -21,7 +21,7 @@ class HelpContextEdit extends AbstractEditor<HelpContext> {
     @Inject
     protected FieldGroup fieldGroup
 
-    @Named("fieldGroup.componentId")
+    @Named('fieldGroup.componentId')
     TextInputField componentIdField
 
     @Inject
@@ -32,6 +32,7 @@ class HelpContextEdit extends AbstractEditor<HelpContext> {
 
     @Inject
     Datasource<HelpContext> helpContextDs
+    private final String SCREEN_ID_FIELD_NAME = 'screenId'
 
 
     @Override
@@ -47,17 +48,17 @@ class HelpContextEdit extends AbstractEditor<HelpContext> {
             screenOptions."${windowInfo.id}" = windowInfo.id
 
         }
-        FieldGroup.FieldConfig screenIdFieldConfig = fieldGroup.getField('screenId')
+        FieldGroup.FieldConfig screenIdFieldConfig = fieldGroup.getField(SCREEN_ID_FIELD_NAME)
         LookupField lookupField = createScreenLookupField(screenOptions)
         screenIdFieldConfig.component = lookupField
     }
 
-    protected LookupField createScreenLookupField(LinkedHashMap screenOptions) {
+    protected LookupField createScreenLookupField(Map screenOptions) {
         LookupField lookupField = componentsFactory.createComponent(LookupField.NAME) as LookupField
         lookupField.enabled = PersistenceHelper.isNew(item) && !item.screenId
         componentIdField.enabled = PersistenceHelper.isNew(item) && !item.screenId
         lookupField.optionsMap = screenOptions
-        lookupField.setDatasource(helpContextDs, 'screenId')
+        lookupField.setDatasource(helpContextDs, SCREEN_ID_FIELD_NAME)
         lookupField.nullOptionVisible = false
         lookupField
     }

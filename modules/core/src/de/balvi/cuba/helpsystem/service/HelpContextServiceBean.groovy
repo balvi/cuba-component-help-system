@@ -13,6 +13,7 @@ class HelpContextServiceBean implements HelpContextService {
 
     @Inject
     DataManager dataManager
+    private final String SCREEN_ID_FIELD_NAME = 'screenId'
 
     @Override
     HelpContext getHelpContext(String screenId, String componentId) {
@@ -34,12 +35,12 @@ class HelpContextServiceBean implements HelpContextService {
             if (componentId) {
                 sqlString += ' and e.componentId = :componentId'
                 LoadContext.createQuery(sqlString)
-                        .setParameter("screenId", screenId)
-                        .setParameter("componentId", componentId)
+                        .setParameter(SCREEN_ID_FIELD_NAME, screenId)
+                        .setParameter('componentId', componentId)
             }
             else {
                 LoadContext.createQuery(sqlString)
-                        .setParameter("screenId", screenId)
+                        .setParameter(SCREEN_ID_FIELD_NAME, screenId)
             }
         }
         else {

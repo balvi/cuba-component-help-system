@@ -9,7 +9,7 @@ import javax.inject.Inject
 import java.lang.annotation.Annotation
 
 @Component
-@Scope("prototype")
+@Scope('prototype')
 class HelpAnnotationEditorExecutor implements EditorAnnotationExecutor<HasHelp> {
 
     @Inject

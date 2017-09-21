@@ -11,7 +11,7 @@ buildscript {
             }
         }
         maven {
-            url  "https://dl.bintray.com/mariodavid/cuba-components"
+            url  "https://dl.bintray.com/balvi/cuba-components"
         }
     }
     dependencies {
@@ -32,7 +32,9 @@ def servletApi = 'org.apache.tomcat:tomcat-servlet-api:8.0.26'
 apply(plugin: 'idea')
 apply(plugin: 'cuba')
 
+
 def bintrayRepositoryUrl = "https://api.bintray.com/maven/balvi/cuba-components/cuba-component-help-system/;publish=1"
+
 
 cuba {
     artifact {
@@ -82,8 +84,8 @@ def sourceDirs = subprojects
 cobertura {
     coverageFormats = ['html', 'xml']
     coverageMergeDatafiles = files
-    coverageCheckTotalBranchRate = 35
-    coverageCheckTotalLineRate = 40
+    coverageCheckTotalBranchRate = 0
+    coverageCheckTotalLineRate = 0
     coverageCheckHaltOnFailure = true
     coverageSourceDirs = sourceDirs
 //    coverageCheckLineRate = 1
