@@ -13,7 +13,7 @@ import java.lang.annotation.Annotation
 class HelpAnnotationEditorExecutor implements EditorAnnotationExecutor<HasHelp> {
 
     @Inject
-    HelpRenderer contextHelpRenderer
+    HelpSidePanelRenderer helpSidePanelRenderer
 
     @Override
     void init(HasHelp annotation, Window.Editor editor, Map<String, Object> params) {
@@ -22,7 +22,7 @@ class HelpAnnotationEditorExecutor implements EditorAnnotationExecutor<HasHelp> 
 
     @Override
     void postInit(HasHelp annotation, Window.Editor editor) {
-        contextHelpRenderer.initComponent(editor.frame)
+        helpSidePanelRenderer.initComponent(editor.frame)
     }
 
     @Override

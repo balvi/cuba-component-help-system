@@ -22,18 +22,41 @@ class HelptextComponentHelper {
     @Inject
     ComponentsFactory componentsFactory
 
-    void createTabForHelptext(Accordion helpAcc, Helptext helptext) {
+    @Inject
+    HelpContextService helpContextService
+
+    void initHelptextAccordion(HelpContext helpContext, Accordion helptextAccordion) {
+//        HelpContext helpContext = currentHelpContext
+
+        contextIndependentHelptexts.each { Helptext helptext ->
+            createTabForHelptext(helptextAccordion, helptext)
+        }
+
+        if (helpContext && helpContext.helptexts) {
+            helpContext.helptexts.sort { it.category.code }.each { Helptext helptext ->
+                createTabForHelptext(helptextAccordion, helptext)
+            }
+        }
+    }
+
+
+    protected Collection<Helptext> getContextIndependentHelptexts() {
+        helpContextService.contextIndependentHelptexts
+    }
+
+
+    void createTabForHelptext(Accordion helptextAccordion, Helptext helptext) {
         ScrollBoxLayout scrollBox = createHelpAccordionScrollBoxLayout()
 
         BoxLayout textHbox = createHelptextLayoutComponent(helptext)
         scrollBox.add(textHbox)
 
-        createTabComponentForCategory(helpAcc, helptext.category.name, scrollBox)
+        createTabComponentForCategory(helptextAccordion, helptext.category.name, scrollBox)
     }
 
-    Accordion.Tab createTabComponentForCategory(Accordion helpAcc, String categoryName, ScrollBoxLayout scrollBox) {
-        helpAcc.addTab(categoryName, scrollBox)
-        Accordion.Tab newTab = helpAcc.getTab(categoryName)
+    Accordion.Tab createTabComponentForCategory(Accordion helptextAccordion, String categoryName, ScrollBoxLayout scrollBox) {
+        helptextAccordion.addTab(categoryName, scrollBox)
+        Accordion.Tab newTab = helptextAccordion.getTab(categoryName)
         newTab.caption = categoryName
         newTab
     }

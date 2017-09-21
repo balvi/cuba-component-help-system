@@ -13,14 +13,14 @@ import java.lang.annotation.Annotation
 class HelpAnnotationBrowseExecutor implements BrowseAnnotationExecutor<HasHelp> {
 
     @Inject
-    HelpRenderer helpRenderer
+    HelpSidePanelRenderer helpSidePanelRenderer
 
     @Override
     void init(HasHelp annotation, Window.Lookup browse, Map<String, Object> params) {}
 
     @Override
     void ready(HasHelp annotation, Window.Lookup browse, Map<String, Object> params) {
-        helpRenderer.initComponent(browse.frame)
+        helpSidePanelRenderer.initComponent(browse.frame)
     }
 
     @Override
