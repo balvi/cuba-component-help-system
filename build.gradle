@@ -1,6 +1,6 @@
 
 buildscript {
-    ext.cubaVersion = '6.6.3'
+    ext.cubaVersion = '6.5.7'
     repositories {
         mavenLocal()
         maven {
@@ -39,7 +39,7 @@ def bintrayRepositoryUrl = "https://api.bintray.com/maven/balvi/cuba-components/
 cuba {
     artifact {
         group = 'de.balvi.cuba.helpsystem'
-        version = '0.2.0'
+        version = '0.2.1'
         isSnapshot = true
     }
 
@@ -62,7 +62,7 @@ cuba {
 }
 
 dependencies {
-    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.3.1")
+    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.3.3")
 
 }
 
