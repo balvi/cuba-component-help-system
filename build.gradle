@@ -1,6 +1,6 @@
 
 buildscript {
-    ext.cubaVersion = '6.6.3'
+    ext.cubaVersion = '6.5.7'
     repositories {
         mavenLocal()
         maven {
@@ -17,7 +17,7 @@ buildscript {
     dependencies {
         classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
 
-        classpath 'net.saliman:gradle-cobertura-plugin:2.5.0'
+        classpath 'net.saliman:gradle-cobertura-plugin:2.3.2'
     }
 }
 
@@ -39,7 +39,7 @@ def bintrayRepositoryUrl = "https://api.bintray.com/maven/balvi/cuba-components/
 cuba {
     artifact {
         group = 'de.balvi.cuba.helpsystem'
-        version = '0.1.1'
+        version = '0.0.9'
         isSnapshot = false
     }
 
@@ -62,7 +62,7 @@ cuba {
 }
 
 dependencies {
-    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.3.1")
+    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.1.1")
 
 }
 
@@ -108,6 +108,10 @@ configure([globalModule, coreModule, guiModule, webModule]) {
 
     dependencies {
         testCompile('junit:junit:4.12')
+
+        testCompile('org.spockframework:spock-core:1.0-groovy-2.4')
+        testCompile('org.springframework:spring-test:4.3.1.RELEASE')
+        testRuntime "cglib:cglib-nodep:3.2.4"
     }
 
     task sourceJar(type: Jar) {
@@ -146,6 +150,11 @@ configure([globalModule, coreModule, guiModule, webModule]) {
         coverageIgnores = ['org.slf4j.Logger.*']
         coverageReportDir = new File("$buildDir/reports/cobertura")
 
+        coverageExcludes = [
+                '.*Generator',
+                '.*Enum',
+                '.*Hilfe.*' // Hilfe wird vorerst deaktiviert, da die Hilfe noch einem großen Refactoring unterliegt und dies bisher nur ein Proof of Concept ist
+        ]
     }
 
     test.finalizedBy(project.tasks.cobertura)
@@ -304,7 +313,7 @@ task restart(dependsOn: ['stop', ':help-system-core:deploy', ':help-system-web:d
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.4'
+    gradleVersion = '3.1'
 }
 
 apply from: 'extra.gradle'
