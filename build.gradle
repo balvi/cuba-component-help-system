@@ -40,7 +40,7 @@ cuba {
     artifact {
         group = 'de.balvi.cuba.helpsystem'
         version = '0.2.0'
-        isSnapshot = true
+        isSnapshot = false
     }
 
     tomcat {
