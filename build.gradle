@@ -1,6 +1,6 @@
 
 buildscript {
-    ext.cubaVersion = '6.6.3'
+    ext.cubaVersion = '6.7.2'
     repositories {
         mavenLocal()
         maven {
@@ -62,7 +62,7 @@ cuba {
 }
 
 dependencies {
-    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.3.1")
+    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.4.0")
 
 }
 
@@ -304,7 +304,7 @@ task restart(dependsOn: ['stop', ':help-system-core:deploy', ':help-system-web:d
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.4'
+    gradleVersion = '3.5'
 }
 
 apply from: 'extra.gradle'
