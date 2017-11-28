@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+- registerComponent in HelpSidePanelRenderer since filter panel does not work
+
+### Dependencies
+- spock 1.0
+
 ## [0.2.0] - 6.11.2017
 
 ### Dependencies
