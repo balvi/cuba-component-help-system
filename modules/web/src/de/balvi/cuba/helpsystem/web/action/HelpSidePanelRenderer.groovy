@@ -54,9 +54,17 @@ class HelpSidePanelRenderer {
     void initComponent(Frame frame) {
         wrappedFrame = frame
 
+        Collection<Component> components = new ArrayList<>(frame.ownComponents)
+
         initLeftRightSplitPanel()
         closeHelpPanel()
 
+        //  im Anschluss alles wieder restaurieren
+        for (component in components) {
+            if (component.id != null) {
+                frame.registerComponent(component)
+            }
+        }
     }
 
     protected void initLeftRightSplitPanel() {
@@ -101,7 +109,6 @@ class HelpSidePanelRenderer {
         rightBox.spacing = true
         rightBox.expand(helpAcc)
         helpAcc.visible = false
-
 
         rightBox
     }
