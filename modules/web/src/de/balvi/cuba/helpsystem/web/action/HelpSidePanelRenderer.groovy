@@ -21,6 +21,9 @@ import javax.inject.Inject
 @Scope('prototype')
 class HelpSidePanelRenderer {
 
+    public static final String HELP_SIDE_PANEL_LEFT_BOX_COMPONENT_ID = 'helpSidePanelLeftBox'
+    public static final String HELP_SIDE_PANEL_RIGHT_BOX_COMPONENT_ID = 'helpSidePanelRightBox'
+
     @Inject
     ButtonsPanelHelper buttonsPanelHelper
 
@@ -83,6 +86,7 @@ class HelpSidePanelRenderer {
         wrappedFrame.removeAll()
 
         BoxLayout leftBox = componentsFactory.createComponent(VBoxLayout)
+        leftBox.id = HELP_SIDE_PANEL_LEFT_BOX_COMPONENT_ID
         leftBox.spacing = true
         leftBox.setMargin(false, true, false, false)
         leftBox.setHeightFull()
@@ -98,6 +102,7 @@ class HelpSidePanelRenderer {
 
     protected BoxLayout createRightBox() {
         BoxLayout rightBox = createRightBoxLayout()
+        rightBox.id = HELP_SIDE_PANEL_RIGHT_BOX_COMPONENT_ID
         BoxLayout buttonBox = createHelpButtonBox()
         BoxLayout buttonEnabledBox = createHelpButtonEnabledBox()
 
