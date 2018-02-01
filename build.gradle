@@ -13,6 +13,9 @@ buildscript {
         maven {
             url  "https://dl.bintray.com/balvi/cuba-components"
         }
+        maven {
+            url 'https://nexus.intern.balvi.de/repository/maven-public/'
+        }
     }
     dependencies {
         classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
