@@ -1,6 +1,6 @@
 
 buildscript {
-    ext.cubaVersion = '6.7.2'
+    ext.cubaVersion = '6.7-SNAPSHOT'
     repositories {
         mavenLocal()
         maven {
@@ -62,7 +62,7 @@ cuba {
 }
 
 dependencies {
-    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.4.0")
+    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.4.1-SNAPSHOT") // use 0.4.0
 
 }
 
