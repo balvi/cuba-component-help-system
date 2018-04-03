@@ -5,6 +5,7 @@
 *.iws
 build/*
 deploy/*
+.idea
 modules/*/build/*
 out
 test-run

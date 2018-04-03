@@ -12,6 +12,6 @@
         <property name="helpContext"
                   view="_minimal"/>
         <property name="category"
-                  view="_minimal"/>
+                  view="_local"/>
     </view>
 </views>
