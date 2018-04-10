@@ -4,13 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.2.1] - 10.04.2018
 
 ### Fixed
 - registerComponent in HelpSidePanelRenderer since filter panel does not work
 
 ### Dependencies
 - spock 1.0
+- CUBA 6.7.x
 
 ## [0.2.0] - 6.11.2017
 
