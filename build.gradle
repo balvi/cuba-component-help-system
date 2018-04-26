@@ -1,6 +1,6 @@
 
 buildscript {
-    ext.cubaVersion = '6.7.12'
+    ext.cubaVersion = '6.8.6'
     repositories {
         mavenLocal()
         maven {
@@ -17,7 +17,7 @@ buildscript {
     dependencies {
         classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
 
-        classpath 'net.saliman:gradle-cobertura-plugin:2.5.0'
+        classpath 'net.saliman:gradle-cobertura-plugin:2.5.4'
     }
 }
 
@@ -39,7 +39,7 @@ def bintrayRepositoryUrl = "https://api.bintray.com/maven/balvi/cuba-components/
 cuba {
     artifact {
         group = 'de.balvi.cuba.helpsystem'
-        version = '0.2.1'
+        version = '0.3.0'
         isSnapshot = false
     }
 
@@ -62,7 +62,7 @@ cuba {
 }
 
 dependencies {
-    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.4.0") // use 0.4.0
+    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.5.0")
 
 }
 
@@ -306,7 +306,7 @@ task restart(dependsOn: ['stop', ':help-system-core:deploy', ':help-system-web:d
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.5'
+    gradleVersion = '4.3.1'
 }
 
 apply from: 'extra.gradle'
