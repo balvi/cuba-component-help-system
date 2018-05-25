@@ -11,8 +11,12 @@
             template="de/balvi/cuba/helpsystem/web/helpcontext/help-context-edit.xml"/>
     <screen id="dbchs$Helptext.browse"
             template="de/balvi/cuba/helpsystem/web/helptext/helptext-browse.xml"/>
+    <screen id="dbchs$Helptext.lookup"
+            template="de/balvi/cuba/helpsystem/web/helptext/helptext-lookup.xml"/>
     <screen id="dbchs$Helptext.edit"
             template="de/balvi/cuba/helpsystem/web/helptext/helptext-edit.xml"/>
     <screen id="dbchs$Helptext.show"
             template="de/balvi/cuba/helpsystem/web/helptext/helptext-show.xml"/>
+    <screen id="dbchs$Helptext.showSingle"
+            template="de/balvi/cuba/helpsystem/web/helptext/helptext-show-single.xml"/>
 </screen-config>
