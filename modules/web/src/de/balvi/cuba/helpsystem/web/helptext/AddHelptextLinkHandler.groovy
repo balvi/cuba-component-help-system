@@ -14,7 +14,7 @@ class AddHelptextLinkHandler implements Window.Lookup.Handler {
     }
 
     String getValueForTarget(Collection items) {
-        "${target.getValue()} ${createLinkForHelptext(items[0] as Helptext)}"
+        "${target.value} ${createLinkForHelptext(items[0] as Helptext)}"
     }
 
     String createLinkForHelptext(Helptext helptext) {

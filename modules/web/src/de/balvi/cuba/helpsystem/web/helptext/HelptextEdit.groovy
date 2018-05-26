@@ -13,12 +13,6 @@ class HelptextEdit extends AbstractEditor<Helptext> {
     @Inject
     RichTextArea textTextArea
 
-    @Override
-    void init(Map<String, Object> params) {
-        super.init(params)
-
-    }
-
     void addHelptextLink() {
         openLookup(Helptext, new AddHelptextLinkHandler(target: textTextArea), WindowManager.OpenType.DIALOG)
     }
