@@ -17,19 +17,31 @@
             </query>
         </collectionDatasource>
     </dsContext>
+    <actions>
+        <action id="addHelptextLink"
+                caption="msg://addHelptextLink"
+                invoke="addHelptextLink"
+                icon="font-icon:EXTERNAL_LINK"
+        />
+    </actions>
     <dialogMode height="600"
                 resizable="true"
                 width="800"/>
     <layout expand="textTextArea"
             spacing="true">
-        <fieldGroup id="fieldGroup"
-                    datasource="helptextDs">
-            <column width="400px">
-                <field optionsDatasource="categoriesDs"
-                       property="category"/>
-            </column>
-        </fieldGroup>
-
+        <hbox id="headerBox"
+              width="100%">
+            <fieldGroup id="fieldGroup"
+                        datasource="helptextDs">
+                <column width="250px">
+                    <field optionsDatasource="categoriesDs"
+                           property="category"/>
+                </column>
+            </fieldGroup>
+            <button id="addHelptextLinkBtn"
+                    align="TOP_RIGHT"
+                    action="addHelptextLink"/>
+        </hbox>
         <richTextArea id="textTextArea"
                       datasource="helptextDs"
                       property="text"
