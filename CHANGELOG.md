@@ -8,8 +8,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 - fixed Issue #7 - Multiple help sidbars appearing
-  Update servlet-api dependency
-  Migrate project entities enhancing configuration
 
 ## [0.5.0] - 04.03.2019
 
