@@ -2,14 +2,14 @@
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
         class="de.balvi.cuba.helpsystem.web.helptext.HelptextShow"
         messagesPack="de.balvi.cuba.helpsystem.web.helptext">
-
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="helptextsBox"
-            spacing="true">
-
-        <hbox id="helptextsBox" width="100%" expand="helpAcc">
-            <accordion id="helpAcc" width="100%" height="100%"></accordion>
+    <layout spacing="true">
+        <hbox id="helptextsBox"
+              height="100%"
+              width="100%">
+            <accordion id="helpAcc"
+                       height="100%"/>
         </hbox>
     </layout>
 </window>

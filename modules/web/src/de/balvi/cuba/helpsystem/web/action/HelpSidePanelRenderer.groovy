@@ -52,12 +52,19 @@ class HelpSidePanelRenderer {
     private final String ENABLED_BUTTON_BOX_ID = 'enabledButtonBox'
     private final String QUESTION_MARK_ICON = 'font-icon:QUESTION_CIRCLE'
     private final String HELP_BUTTON_ACTION_ID = 'helpBtnAction'
+    private final String SPLIT_PANEL_ID = 'splitPanelHelpSystem'
 
 
     void initComponent(Frame frame) {
         wrappedFrame = frame
 
         Collection<Component> components = new ArrayList<>(frame.ownComponents)
+
+        for (component in components) {
+            if (component.id == SPLIT_PANEL_ID) {
+                return
+            }
+        }
 
         initLeftRightSplitPanel()
         closeHelpPanel()
@@ -75,6 +82,7 @@ class HelpSidePanelRenderer {
         BoxLayout rightBox = createRightBox()
 
         splitPanel = createSplitPanel(leftBox, rightBox)
+        splitPanel.setId(SPLIT_PANEL_ID)
         wrappedFrame.add(splitPanel)
     }
 
