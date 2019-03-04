@@ -1,6 +1,6 @@
 
 buildscript {
-    ext.cubaVersion = '6.8.8'
+    ext.cubaVersion = '6.10.7'
     repositories {
         mavenLocal()
         maven {
@@ -21,12 +21,14 @@ buildscript {
     }
 }
 
-def globalModule = project(':help-system-global')
-def coreModule = project(':help-system-core')
-def guiModule = project(':help-system-gui')
-def webModule = project(':help-system-web')
+def modulePrefix = 'help-system'
 
-def servletApi = 'org.apache.tomcat:tomcat-servlet-api:8.0.26'
+def globalModule = project(":${modulePrefix}-global" )
+def coreModule = project(":${modulePrefix}-core" )
+def guiModule = project(":${modulePrefix}-gui" )
+def webModule = project(":${modulePrefix}-web" )
+
+def servletApi = 'javax.servlet:javax.servlet-api:3.1.0'
 
 
 apply(plugin: 'idea')
@@ -39,7 +41,7 @@ def bintrayRepositoryUrl = "https://api.bintray.com/maven/balvi/cuba-components/
 cuba {
     artifact {
         group = 'de.balvi.cuba.helpsystem'
-        version = '0.3.0'
+        version = "0.5.0"
         isSnapshot = false
     }
 
@@ -62,7 +64,7 @@ cuba {
 }
 
 dependencies {
-    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.5.0")
+    appComponent("de.balvi.cuba.declarativecontrollers:declarativecontrollers-global:0.7.0")
 
 }
 
@@ -161,7 +163,9 @@ configure([globalModule, coreModule, guiModule, webModule]) {
 }
 
 configure(globalModule) {
-    task enhance(type: CubaEnhancing)
+    entitiesEnhancing {
+        main { enabled = true }
+    }
 
     jar {
         manifest {
@@ -190,7 +194,7 @@ configure(coreModule) {
 
     task cleanConf(description: 'Cleans up conf directory') {
         doLast {
-            def dir = new File(cuba.tomcat.dir, '/conf/help-system-core')
+            def dir = new File(cuba.tomcat.dir, "/conf/${modulePrefix}-core" )
             if (dir.isDirectory()) {
                 ant.delete(includeemptydirs: true) {
                     fileset(dir: dir, includes: '**/*', excludes: 'local.app.properties')
@@ -200,8 +204,8 @@ configure(coreModule) {
     }
 
     task deploy(dependsOn: [assemble, cleanConf], type: CubaDeployment) {
-        appName = 'help-system-core'
-        appJars('help-system-global', 'help-system-core')
+        appName = "${modulePrefix}-core"
+        appJars(modulePrefix + '-global', modulePrefix + '-core')
     }
 
     task createDb(dependsOn: assembleDbScripts, description: 'Creates local database', type: CubaDbCreation) {
@@ -231,7 +235,7 @@ configure(guiModule) {
     task deployConf(type: Copy) {
         from file('src')
         include "de/balvi/cuba/helpsystem/**"
-        into "$cuba.tomcat.dir/conf/help-system"
+        into "$cuba.tomcat.dir/conf/${modulePrefix}"
     }
 }
 
@@ -259,17 +263,17 @@ configure(webModule) {
     task deployConf(type: Copy) {
         from file('src')
         include "de/balvi/cuba/helpsystem/**"
-        into "$cuba.tomcat.dir/conf/help-system"
+        into "$cuba.tomcat.dir/conf/${modulePrefix}"
     }
 
     task clearMessagesCache(type: CubaClearMessagesCache) {
-        appName = 'help-system'
+        appName = "${modulePrefix}"
     }
     deployConf.dependsOn clearMessagesCache
 
     task cleanConf(description: 'Cleans up conf directory') {
         doLast {
-            def dir = new File(cuba.tomcat.dir, '/conf/help-system')
+            def dir = new File(cuba.tomcat.dir, "/conf/${modulePrefix}" )
             if (dir.isDirectory()) {
                 ant.delete(includeemptydirs: true) {
                     fileset(dir: dir, includes: '**/*', excludes: 'local.app.properties')
@@ -279,8 +283,8 @@ configure(webModule) {
     }
 
     task deploy(dependsOn: [assemble, cleanConf], type: CubaDeployment) {
-        appName = 'help-system'
-        appJars('help-system-global', 'help-system-gui', 'help-system-web')
+        appName = "${modulePrefix}"
+        appJars(modulePrefix + '-global', modulePrefix + '-gui', modulePrefix + '-web')
     }
 }
 
@@ -288,13 +292,13 @@ configure(webModule) {
 
 
 
-task undeploy(type: Delete, dependsOn: ':help-system-web:cleanConf') {
+task undeploy(type: Delete, dependsOn: ":${modulePrefix}-web:cleanConf" ) {
     delete("$cuba.tomcat.dir/shared")
-    delete("$cuba.tomcat.dir/webapps/help-system-core")
-    delete("$cuba.tomcat.dir/webapps/help-system")
+    delete("$cuba.tomcat.dir/webapps/${modulePrefix}-core" )
+    delete("$cuba.tomcat.dir/webapps/${modulePrefix}" )
 }
 
-task restart(dependsOn: ['stop', ':help-system-core:deploy', ':help-system-web:deploy'], description: 'Redeploys applications and restarts local Tomcat') {
+task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy" , ":${modulePrefix}-web:deploy" ], description: 'Redeploys applications and restarts local Tomcat') {
     doLast {
         ant.waitfor(maxwait: 6, maxwaitunit: 'second', checkevery: 2, checkeveryunit: 'second') {
             not {

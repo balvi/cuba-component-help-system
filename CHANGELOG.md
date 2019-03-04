@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 04.03.2019
+
+### Changed
+- changes in build.gradle due to migration to 6.10
+  Update servlet-api dependency
+  Migrate project entities enhancing configuration
+  Uses now modulePrefix
+- changes in settings.gradle due to migration to 6.10
+  Uses now modulePrefix
+
+### Dependencies
+- CUBA 6.10.x
+
+## [0.4.0] - skipped
+
+### Dependencies
+- CUBA 6.9.x
+
 ## [0.3.0] - 26.04.2018
 
 ### Dependencies
