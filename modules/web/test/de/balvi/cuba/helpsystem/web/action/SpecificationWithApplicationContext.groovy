@@ -1,5 +1,6 @@
 package de.balvi.cuba.helpsystem.web.action
 
+import com.haulmont.cuba.core.global.BeanLocator
 import com.haulmont.cuba.core.global.Messages
 import com.haulmont.cuba.core.global.UserSessionSource
 import com.haulmont.cuba.core.global.UuidProvider
@@ -13,6 +14,8 @@ class SpecificationWithApplicationContext extends Specification {
 
     @Shared
     ApplicationContext applicationContext
+    @Shared
+    BeanLocator beanLocator
 
     @Shared
     Messages messages
@@ -23,6 +26,8 @@ class SpecificationWithApplicationContext extends Specification {
 
     def setup() {
         applicationContext = Mock()
+        beanLocator = Mock(BeanLocator)
+        applicationContext.getBean(BeanLocator.NAME, BeanLocator.class) >> beanLocator
         initBeans()
 
         AppContext.Internals.setApplicationContext(applicationContext)
@@ -44,13 +49,16 @@ class SpecificationWithApplicationContext extends Specification {
             Class clazz = bean.key
             Object instance = bean.value
 
-            applicationContext.getBean(clazz) >> instance
+            // applicationContext.getBean(clazz) >> instance
+            beanLocator.get(clazz) >> instance
 
             try {
                 String name = clazz.NAME
                 if (name) {
-                    applicationContext.getBean(name) >> instance
-                    applicationContext.getBean(name, clazz) >> instance
+                    // applicationContext.getBean(name) >> instance
+                    // applicationContext.getBean(name, clazz) >> instance
+                    beanLocator.get(name) >> instance
+                    beanLocator.get(name, clazz) >> instance
                 }
             }
             catch(MissingPropertyException e) {

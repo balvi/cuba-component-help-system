@@ -28,7 +28,7 @@ class HelpSidePanelRendererSpec extends SpecificationWithApplicationContext {
         sut.security = Mock(Security)
     }
 
-    def 'initComponent registriert alle Komponenten neu, nachdem diese entfernt wurden'() {
+    def 'initComponent re-registers all components after they have been removed'() {
 
         setup:
         Component c1 = Mock(Component)
